@@ -1,0 +1,18 @@
+{
+  "name": "Ton Instale",
+  "short_name": "Ton Instale",
+  "description": "Orçamentos e agendamentos para instalação de papel de parede.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

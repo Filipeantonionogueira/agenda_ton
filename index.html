@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080808">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ton Instale">
+  <link rel="manifest" href="manifest.webmanifest">
+  <title>Ton Instale</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-mark">TI</div>
+    <strong>Ton Instale</strong>
+    <span>Preparando sua agenda</span>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo" id="brandLogo">TI</div>
+        <div>
+          <strong id="brandName">Ton Instale</strong>
+          <span>Orçamentos e agenda</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu" aria-label="Menu principal">
+        <button class="nav-link active" data-view="dashboardView">
+          <span class="nav-icon">⌂</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-link" data-view="quotesView">
+          <span class="nav-icon">＋</span>
+          <span>Orçamentos</span>
+        </button>
+        <button class="nav-link" data-view="agendaView">
+          <span class="nav-icon">□</span>
+          <span>Agenda</span>
+        </button>
+        <button class="nav-link" data-view="settingsView">
+          <span class="nav-icon">⚙</span>
+          <span>Configurações</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>Dados salvos neste aparelho</span>
+        <button class="ghost-button" id="themeToggle" type="button">Modo escuro</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu">☰</button>
+        <div>
+          <p class="eyebrow">App de campo</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <button class="primary-button compact" id="newQuoteShortcut" type="button">+ Novo</button>
+      </header>
+
+      <section class="view active" id="dashboardView" aria-labelledby="dashboardTitle">
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <span>Agendados</span>
+            <strong id="metricScheduled">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Ganhos</span>
+            <strong id="metricTotal">R$ 0,00</strong>
+          </article>
+          <article class="metric-card">
+            <span>Confirmados</span>
+            <strong id="metricConfirmed">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Hoje</span>
+            <strong id="metricToday">0</strong>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="section-title">
+              <h2>Próximos serviços</h2>
+              <span id="upcomingCount">0 itens</span>
+            </div>
+            <div class="list-stack" id="upcomingList"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>Agenda de hoje</h2>
+              <span id="todayDateLabel"></span>
+            </div>
+            <div class="list-stack" id="todayList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="quotesView" aria-labelledby="quotesTitle">
+        <div class="content-grid">
+          <section class="panel form-panel">
+            <div class="section-title">
+              <h2 id="formTitle">Novo orçamento</h2>
+              <button class="ghost-button" id="clearFormButton" type="button">Limpar</button>
+            </div>
+
+            <form id="quoteForm" class="quote-form">
+              <input type="hidden" id="quoteId">
+
+              <label>
+                Nome do cliente
+                <input id="clientName" type="text" maxlength="90" autocomplete="name" placeholder="Ex.: Maria Souza" required>
+              </label>
+
+              <label>
+                Telefone/WhatsApp
+                <input id="clientPhone" type="tel" inputmode="tel" maxlength="16" autocomplete="tel" placeholder="(11) 99999-9999" required>
+              </label>
+
+              <label class="wide">
+                Endereço completo
+                <input id="clientAddress" type="text" maxlength="180" autocomplete="street-address" placeholder="Rua, número, bairro, cidade" required>
+              </label>
+
+              <label>
+                Data do serviço
+                <input id="serviceDate" type="date" required>
+              </label>
+
+              <label>
+                Quantidade de rolos
+                <input id="rollQuantity" type="number" min="1" max="999" step="1" inputmode="numeric" placeholder="0" required>
+              </label>
+
+              <label>
+                Valor do serviço
+                <input id="serviceValue" type="number" min="0" max="9999999" step="0.01" inputmode="decimal" placeholder="0,00" required>
+              </label>
+
+              <label>
+                Status
+                <select id="serviceStatus">
+                  <option value="Pendente">Pendente</option>
+                  <option value="Confirmado">Confirmado</option>
+                  <option value="Concluído">Concluído</option>
+                  <option value="Cancelado">Cancelado</option>
+                </select>
+              </label>
+
+              <label class="wide">
+                Observações
+                <textarea id="serviceNotes" rows="4" maxlength="500" placeholder="Detalhes do ambiente, horários, referências ou combinados"></textarea>
+              </label>
+
+              <div class="form-actions wide">
+                <button class="primary-button" type="submit" id="saveQuoteButton">Salvar orçamento</button>
+                <button class="whatsapp-button" type="button" id="whatsAppButton">WhatsApp</button>
+                <button class="secondary-button" type="button" id="calendarButton">Adicionar à Agenda</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>Orçamentos</h2>
+              <span id="quotesCount">0 cadastros</span>
+            </div>
+            <div class="toolbar">
+              <input id="quoteSearch" type="search" placeholder="Pesquisar cliente, telefone ou endereço">
+            </div>
+            <div class="list-stack quote-list" id="quotesList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="agendaView" aria-labelledby="agendaTitle">
+        <section class="panel">
+          <div class="section-title">
+            <h2>Agenda</h2>
+            <span id="agendaCount">0 serviços</span>
+          </div>
+
+          <div class="filters">
+            <input id="agendaClientSearch" type="search" placeholder="Pesquisar por cliente">
+            <input id="agendaDateSearch" type="date">
+            <select id="agendaSort">
+              <option value="asc">Data mais próxima</option>
+              <option value="desc">Data mais distante</option>
+            </select>
+          </div>
+
+          <div class="agenda-cards" id="agendaCards"></div>
+          <div class="table-wrap desktop-only">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Cliente</th>
+                  <th>Endereço</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="agendaTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="settingsView" aria-labelledby="settingsTitle">
+        <div class="settings-grid">
+          <section class="panel">
+            <div class="section-title">
+              <h2>Configurações</h2>
+              <span>Empresa</span>
+            </div>
+
+            <form id="settingsForm" class="settings-form">
+              <label>
+                Nome da empresa
+                <input id="companyName" type="text" maxlength="70" required>
+              </label>
+              <label>
+                Telefone principal
+                <input id="companyPhone" type="tel" inputmode="tel" maxlength="16" placeholder="(11) 99999-9999">
+              </label>
+              <label>
+                Logo da empresa
+                <input id="companyLogo" type="file" accept="image/*">
+              </label>
+              <div class="logo-preview" id="logoPreview">TI</div>
+              <button class="primary-button" type="submit">Salvar configurações</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="section-title">
+              <h2>Backup</h2>
+              <span>JSON</span>
+            </div>
+            <div class="backup-actions">
+              <button class="secondary-button" id="exportBackupButton" type="button">Exportar Backup JSON</button>
+              <label class="file-button">
+                Importar Backup JSON
+                <input id="importBackupInput" type="file" accept="application/json">
+              </label>
+            </div>
+            <p class="muted">O backup inclui orçamentos, agenda, tema e configurações da empresa.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <nav class="bottom-nav" aria-label="Menu inferior">
+    <button class="bottom-link active" data-view="dashboardView" type="button">
+      <span>⌂</span>
+      <strong>Início</strong>
+    </button>
+    <button class="bottom-link" data-view="quotesView" type="button">
+      <span>＋</span>
+      <strong>Orçar</strong>
+    </button>
+    <button class="bottom-link" data-view="agendaView" type="button">
+      <span>□</span>
+      <strong>Agenda</strong>
+    </button>
+    <button class="bottom-link" data-view="settingsView" type="button">
+      <span>⚙</span>
+      <strong>Ajustes</strong>
+    </button>
+  </nav>
+
+  <div class="modal-backdrop" id="confirmModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Excluir orçamento?</h2>
+      <p>Esta ação remove o cadastro deste aparelho.</p>
+      <div class="modal-actions">
+        <button class="ghost-button" id="cancelDeleteButton" type="button">Cancelar</button>
+        <button class="danger-button" id="confirmDeleteButton" type="button">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/googleCalendar.js"></script>
+  <script src="js/agenda.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
