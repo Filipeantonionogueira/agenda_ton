@@ -8,7 +8,7 @@
   function buildWhatsAppMessage(quote) {
     return `Olá, ${quote.clientName}!
 
-Seu orçamento para instalação de papel de parede foi realizado com sucesso.
+Seu agendamento para a instalação de papel de parede foi realizado com sucesso.
 
 📅 Data: ${window.TonAgenda.formatDate(quote.serviceDate)}
 📍 Endereço: ${quote.clientAddress}
